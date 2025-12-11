@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+
+<div class="container">
+
+    <div class="card form-card">
+        <h1>Edit Activity</h1>
+
+        <form action="/activities/<%= activity.id %>/edit" method="POST">
+
+            <div class="form-group">
+                <label>Activity Type:</label><br>
+                <input type="text" name="type" value="<%= activity.type %>" required>
+            </div>
+
+            <div class="form-group">
+                <label>Duration (minutes):</label><br>
+                <input type="number" name="duration" value="<%= activity.duration %>" required>
+            </div>
+
+            <div class="form-group">
+                <label>Calories Burned:</label><br>
+                <input type="number" name="calories" value="<%= activity.calories %>">
+            </div>
+
+            <div class="form-group">
+                <label>Date:</label><br>
+                <input type="date" name="date" value="<%= activity.date %>" required>
+            </div>
+
+            <div class="form-group">
+                <label>Notes:</label><br>
+                <textarea name="notes"><%= activity.notes %></textarea>
+            </div>
+
+            <button type="submit" class="btn">Save Changes</button>
+            <a href="/activities" class="btn btn-secondary">Cancel</a>
+
+        </form>
+    </div>
+
+</div>
+
+<%- include('partials/footer') %>

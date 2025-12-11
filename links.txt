@@ -1,1 +1,8 @@
 home=https://doc.gold.ac.uk/usr/441/
+about=https://doc.gold.ac.uk/usr/441/about
+signup=https://doc.gold.ac.uk/usr/441/signup
+login=https://doc.gold.ac.uk/usr/441/login
+activities=https://doc.gold.ac.uk/usr/441/activities
+add-activity=https://doc.gold.ac.uk/usr/441/add-activity
+search=https://doc.gold.ac.uk/usr/441/search
+stats=https://doc.gold.ac.uk/usr/441/stats

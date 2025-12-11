@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-// Detect correct base path for localhost vs Goldsmiths
 function getBase(req) {
     return req.headers.host.includes("doc.gold.ac.uk") ? "/usr/441" : "";
 }
 
-// Redirect users who are not logged in
 function redirectLogin(req, res, next) {
     if (!req.session.userId) {
         req.session.returnTo = req.originalUrl;
@@ -15,12 +13,11 @@ function redirectLogin(req, res, next) {
     next();
 }
 
-// Format MySQL date to YYYY-MM-DD
 function formatDate(dateObj) {
     return dateObj.toISOString().substring(0, 10);
 }
 
-// Show list of activities
+// List activities
 router.get("/activities", redirectLogin, (req, res, next) => {
     const sql = `
         SELECT * FROM activities
@@ -43,12 +40,12 @@ router.get("/activities", redirectLogin, (req, res, next) => {
     });
 });
 
-// Show add activity form
+// Add form
 router.get("/add-activity", redirectLogin, (req, res) => {
     res.render("add-activity.ejs", { session: req.session });
 });
 
-// Handle add activity submit
+// Add submit
 router.post("/add-activity", redirectLogin, (req, res, next) => {
     const { type, duration, calories, notes, date } = req.body;
 
@@ -80,12 +77,12 @@ router.post("/add-activity", redirectLogin, (req, res, next) => {
     });
 });
 
-// Show search page
+// Search page
 router.get("/search", redirectLogin, (req, res) => {
     res.render("search.ejs", { session: req.session });
 });
 
-// Show search results
+// Search results
 router.get("/search_result", redirectLogin, (req, res, next) => {
     const keyword = "%" + req.query.keyword + "%";
 
@@ -112,7 +109,7 @@ router.get("/search_result", redirectLogin, (req, res, next) => {
     });
 });
 
-// Show stats page
+// Stats page
 router.get("/stats", redirectLogin, (req, res, next) => {
     const sql = `
         SELECT date, calories
@@ -132,6 +129,54 @@ router.get("/stats", redirectLogin, (req, res, next) => {
             labels,
             values
         });
+    });
+});
+
+// Edit form
+router.get("/activities/:id/edit", redirectLogin, (req, res, next) => {
+    const sql = "SELECT * FROM activities WHERE id = ? AND user_id = ?";
+
+    db.query(sql, [req.params.id, req.session.userId], (err, rows) => {
+        if (err) return next(err);
+        if (rows.length === 0) return res.redirect("/activities");
+
+        const activity = rows[0];
+        activity.date = formatDate(activity.date);
+
+        res.render("edit-activity.ejs", {
+            session: req.session,
+            activity
+        });
+    });
+});
+
+// Edit submit
+router.post("/activities/:id/edit", redirectLogin, (req, res, next) => {
+    const { type, duration, calories, notes, date } = req.body;
+
+    const sql = `
+        UPDATE activities
+        SET type = ?, duration = ?, calories = ?, notes = ?, date = ?
+        WHERE id = ? AND user_id = ?
+    `;
+
+    db.query(
+        sql,
+        [type, duration, calories, notes, date, req.params.id, req.session.userId],
+        err => {
+            if (err) return next(err);
+            res.redirect("/activities");
+        }
+    );
+});
+
+// Delete activity
+router.get("/activities/:id/delete", redirectLogin, (req, res, next) => {
+    const sql = "DELETE FROM activities WHERE id = ? AND user_id = ?";
+
+    db.query(sql, [req.params.id, req.session.userId], err => {
+        if (err) return next(err);
+        res.redirect("/activities");
     });
 });
 

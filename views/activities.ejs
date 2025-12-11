@@ -25,6 +25,7 @@
                     <th>Duration (min)</th>
                     <th>Calories</th>
                     <th>Notes</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
 
@@ -36,6 +37,15 @@
                         <td><%= a.duration %></td>
                         <td><%= a.calories %></td>
                         <td><%= a.notes %></td>
+
+                        <td>
+                            <a href="/activities/<%= a.id %>/edit" class="btn btn-secondary">Edit</a>
+                            <a href="/activities/<%= a.id %>/delete" 
+                               class="btn btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this activity?');">
+                               Delete
+                            </a>
+                        </td>
                     </tr>
                 <% }) %>
             </tbody>
