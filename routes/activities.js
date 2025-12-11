@@ -1,17 +1,28 @@
 const express = require("express");
 const router = express.Router();
 
+// Detect correct base path for localhost vs Goldsmiths
 function getBase(req) {
     return req.headers.host.includes("doc.gold.ac.uk") ? "/usr/441" : "";
 }
 
+// Require login before accessing routes
 function redirectLogin(req, res, next) {
     if (!req.session.userId) {
         req.session.returnTo = req.originalUrl;
-        return res.redirect(getBase(req) + "/login");
+
+        
+        req.session.base = getBase(req);
+
+        return res.redirect(req.session.base + "/login");
     }
+
+
+    req.session.base = getBase(req);
+
     next();
 }
+
 
 function formatDate(dateObj) {
     return dateObj.toISOString().substring(0, 10);
@@ -138,15 +149,16 @@ router.get("/activities/:id/edit", redirectLogin, (req, res, next) => {
 
     db.query(sql, [req.params.id, req.session.userId], (err, rows) => {
         if (err) return next(err);
-        if (rows.length === 0) return res.redirect("/activities");
+        if (rows.length === 0) return res.redirect(req.session.base + "/activities");
 
         const activity = rows[0];
         activity.date = formatDate(activity.date);
 
         res.render("edit-activity.ejs", {
-            session: req.session,
+            session: { ...req.session, base: req.session.base },
             activity
         });
+
     });
 });
 
@@ -165,7 +177,7 @@ router.post("/activities/:id/edit", redirectLogin, (req, res, next) => {
         [type, duration, calories, notes, date, req.params.id, req.session.userId],
         err => {
             if (err) return next(err);
-            res.redirect("/activities");
+            res.redirect(req.session.base + "/activities");
         }
     );
 });
@@ -176,7 +188,7 @@ router.get("/activities/:id/delete", redirectLogin, (req, res, next) => {
 
     db.query(sql, [req.params.id, req.session.userId], err => {
         if (err) return next(err);
-        res.redirect("/activities");
+        res.redirect(req.session.base + "/activities");
     });
 });
 

@@ -43,8 +43,12 @@ router.post("/login", (req, res, next) => {
         req.session.userId = user.id;
         req.session.username = user.username;
 
-        const base = getBase(req);
-        const redirectTo = req.session.returnTo ? base + req.session.returnTo : base + "/";
+
+        req.session.base = getBase(req);
+
+        const redirectTo = req.session.returnTo 
+            ? req.session.base + req.session.returnTo 
+            : req.session.base + "/";
 
         delete req.session.returnTo;
         res.redirect(redirectTo);
@@ -78,8 +82,9 @@ router.post("/signup", async (req, res, next) => {
             req.session.userId = result.insertId;
             req.session.username = username;
 
-            const base = getBase(req);
-            res.redirect(base + "/");
+            req.session.base = getBase(req);
+
+            res.redirect(req.session.base + "/");
         });
     });
 });
