@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<div class="container">
+    <div class="card">
+        <h1>Your Activity Stats</h1>
+
+        <% if (labels.length === 0) { %>
+
+            <p class="empty-message">No activity data available to graph.</p>
+
+        <% } else { %>
+
+            <canvas id="statsChart" width="400" height="200"></canvas>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script>
+                const ctx = document.getElementById('statsChart');
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: <%- JSON.stringify(labels) %>,
+                        datasets: [{
+                            label: 'Calories Burned',
+                            data: <%- JSON.stringify(values) %>,
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0.25,
+                        }]
+                    }
+                });
+            </script>
+
+        <% } %>
+
+    </div>
+</div>
+
+<%- include('partials/footer') %>

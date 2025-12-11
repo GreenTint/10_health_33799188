@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Your Activities</h1>
+    </div>
+
+    <div class="actions">
+        <a href="/add-activity" class="btn">Add New Activity</a>
+        <a href="/search" class="btn btn-secondary">Search</a>
+    </div>
+
+    <% if (activities.length === 0) { %>
+
+        <p class="empty-message">No activities found yet. Add your first one!</p>
+
+    <% } else { %>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Duration (min)</th>
+                    <th>Calories</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% activities.forEach(a => { %>
+                    <tr>
+                        <td><%= a.date %></td>
+                        <td><%= a.type %></td>
+                        <td><%= a.duration %></td>
+                        <td><%= a.calories %></td>
+                        <td><%= a.notes %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+
+    <% } %>
+
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,47 @@
+<%- include('partials/header') %>
+
+<div class="container">
+
+    <div class="card results-card">
+
+        <h1>Search Results for "<%= keyword %>"</h1>
+
+        <a href="/search" class="btn btn-secondary">New Search</a>
+
+        <% if (searchResults.length === 0) { %>
+
+            <p class="empty-message">No matching activities found.</p>
+
+        <% } else { %>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Duration</th>
+                        <th>Calories</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% searchResults.forEach(a => { %>
+                        <tr>
+                            <td><%= a.date %></td>
+                            <td><%= a.type %></td>
+                            <td><%= a.duration %></td>
+                            <td><%= a.calories %></td>
+                            <td><%= a.notes %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+<%- include('partials/footer') %>

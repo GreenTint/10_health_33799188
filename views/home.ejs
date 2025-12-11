@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+<div class="container">
+
+    <div class="card home-card">
+
+        <h1>Fitness Progress Tracker</h1>
+        <p>Welcome to your personal fitness tracking dashboard.</p>
+
+        <% if (session && session.userId) { %>
+
+            <p class="welcome-user">
+                You are logged in as <strong><%= session.username %></strong>.
+            </p>
+
+            <ul class="menu-list">
+                <li><a href="/add-activity" class="menu-link">Add New Activity</a></li>
+                <li><a href="/activities" class="menu-link">View Your Activities</a></li>
+                <li><a href="/search" class="menu-link">Search Activities</a></li>
+                <li><a href="/stats" class="menu-link">View Stats</a></li>
+                <li><a href="/logout" class="menu-link">Logout</a></li>
+            </ul>
+
+        <% } else { %>
+
+            <p>Please <a href="/login" class="menu-link">log in</a> to start tracking your fitness progress.</p>
+
+            <ul class="menu-list">
+                <li><a href="/about" class="menu-link">About This App</a></li>
+                <li><a href="/login" class="menu-link">Login</a></li>
+            </ul>
+
+        <% } %>
+
+    </div>
+
+</div>
+
+<%- include('partials/footer') %>

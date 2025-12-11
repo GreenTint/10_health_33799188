@@ -1,0 +1,195 @@
+/* ------------------------------
+   GLOBAL STYLES
+-------------------------------*/
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #fafafa;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding-top: 20px;
+}
+
+/* ------------------------------
+   NAVIGATION BAR
+-------------------------------*/
+
+.navbar {
+    background: #f0f0f0;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+}
+
+.navbar a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.divider {
+    margin: 0;
+}
+
+/* ------------------------------
+   HEADERS
+-------------------------------*/
+
+h1 {
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.page-header {
+    margin-bottom: 20px;
+}
+
+/* ------------------------------
+   CARDS
+-------------------------------*/
+
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* ------------------------------
+   BUTTONS
+-------------------------------*/
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #4285f4;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #3367d6;
+}
+
+.btn-secondary {
+    background: #777;
+}
+
+.btn-secondary:hover {
+    background: #555;
+}
+
+/* ------------------------------
+   FORMS
+-------------------------------*/
+
+form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="date"],
+textarea {
+    width: 300px;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+textarea {
+    height: 80px;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 15px;
+}
+
+/* ------------------------------
+   LISTS
+-------------------------------*/
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-list li {
+    margin-bottom: 8px;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: #4285f4;
+}
+
+.menu-link:hover {
+    text-decoration: underline;
+}
+
+/* ------------------------------
+   TABLES
+-------------------------------*/
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.table th {
+    background: #f2f2f2;
+}
+
+.table-striped tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* ------------------------------
+   MESSAGES
+-------------------------------*/
+
+.empty-message {
+    font-style: italic;
+    color: #666;
+}
+
+/* ------------------------------
+   FOOTER
+-------------------------------*/
+
+.footer {
+    margin-top: 40px;
+    padding: 20px;
+    background: #eee;
+    text-align: center;
+}

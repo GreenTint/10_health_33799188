@@ -1,0 +1,24 @@
+<%- include('partials/header') %>
+
+<div class="container">
+
+    <div class="card form-card">
+
+        <h1>Search Activities</h1>
+
+        <form action="/search_result" method="GET">
+
+            <div class="form-group">
+                <label for="keyword">Keyword (type or notes):</label>
+                <input type="text" id="keyword" name="keyword" required>
+            </div>
+
+            <button type="submit" class="btn">Search</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<%- include('partials/footer') %>

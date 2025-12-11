@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<div class="container">
+
+    <div class="card activity-added-card">
+
+        <h1>Activity Added</h1>
+
+        <div class="details">
+            <p><strong>Type:</strong> <%= type %></p>
+            <p><strong>Duration:</strong> <%= duration %> minutes</p>
+            <p><strong>Calories:</strong> <%= calories %></p>
+            <p><strong>Notes:</strong> <%= notes %></p>
+            <p><strong>Date:</strong> <%= date %></p>
+        </div>
+
+        <a href="/activities" class="btn">View All Activities</a>
+
+    </div>
+
+</div>
+
+<%- include('partials/footer') %>
