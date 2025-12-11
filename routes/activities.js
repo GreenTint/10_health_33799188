@@ -1,16 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-// LOGIN CHECK
-const redirectLogin = (req, res, next) => {
+// Detect correct base path
+function getBase(req) {
+    return req.headers.host.includes("doc.gold.ac.uk") ? "/usr/441" : "";
+}
+
+// Redirect if not logged in
+function redirectLogin(req, res, next) {
     if (!req.session.userId) {
         req.session.returnTo = req.originalUrl;
-        return res.redirect("/login");
+        return res.redirect(getBase(req) + "/login");
     }
     next();
-};
+}
 
-// LIST ACTIVITIES
+// List activities
 router.get("/activities", redirectLogin, (req, res, next) => {
     const sql = `
         SELECT * FROM activities
@@ -20,20 +25,16 @@ router.get("/activities", redirectLogin, (req, res, next) => {
 
     db.query(sql, [req.session.userId], (err, rows) => {
         if (err) return next(err);
-
-        res.render("activities.ejs", {
-            session: req.session,
-            activities: rows
-        });
+        res.render("activities.ejs", { session: req.session, activities: rows });
     });
 });
 
-// ADD FORM
+// Show add activity form
 router.get("/add-activity", redirectLogin, (req, res) => {
     res.render("add-activity.ejs", { session: req.session });
 });
 
-// ADD SUBMIT
+// Handle add activity submit
 router.post("/add-activity", redirectLogin, (req, res, next) => {
     const { type, duration, calories, notes, date } = req.body;
 
@@ -53,24 +54,16 @@ router.post("/add-activity", redirectLogin, (req, res, next) => {
 
     db.query(sql, params, err => {
         if (err) return next(err);
-
-        res.render("activity-added.ejs", {
-            session: req.session,
-            type,
-            duration,
-            calories,
-            notes,
-            date
-        });
+        res.render("activity-added.ejs", { session: req.session, type, duration, calories, notes, date });
     });
 });
 
-// SEARCH
+// Show search page
 router.get("/search", redirectLogin, (req, res) => {
     res.render("search.ejs", { session: req.session });
 });
 
-// RESULTS
+// Handle search
 router.get("/search_result", redirectLogin, (req, res, next) => {
     const keyword = "%" + req.query.keyword + "%";
 
@@ -83,7 +76,6 @@ router.get("/search_result", redirectLogin, (req, res, next) => {
 
     db.query(sql, [req.session.userId, keyword, keyword], (err, rows) => {
         if (err) return next(err);
-
         res.render("search_result.ejs", {
             session: req.session,
             searchResults: rows,
@@ -92,10 +84,10 @@ router.get("/search_result", redirectLogin, (req, res, next) => {
     });
 });
 
-// STATS PAGE
+// Stats page
 router.get("/stats", redirectLogin, (req, res, next) => {
     const sql = `
-        SELECT date, calories 
+        SELECT date, calories
         FROM activities
         WHERE user_id = ?
         ORDER BY date
