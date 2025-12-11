@@ -1,8 +1,6 @@
 USE health;
 
---------------------------------------------------------
 -- INSERT DEFAULT USER (required for marking)
---------------------------------------------------------
 
 -- Password = smiths123ABC$
 -- Bcrypt hash generated with 10 salt rounds
@@ -13,9 +11,7 @@ VALUES
 -- Get the inserted user ID (usually 1)
 SET @userId = LAST_INSERT_ID();
 
---------------------------------------------------------
 -- INSERT SAMPLE ACTIVITIES
---------------------------------------------------------
 
 INSERT INTO activities (user_id, type, duration, calories, notes, date)
 VALUES
